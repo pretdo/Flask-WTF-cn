@@ -1,4 +1,4 @@
-Installation
+安装
 ============
 
 This part of the documentation covers the installation of Flask-WTF.
@@ -19,7 +19,7 @@ or, with `easy_install <http://pypi.python.org/pypi/setuptools>`_::
 But, you really `shouldn't do that <https://python-packaging-user-guide.readthedocs.org/en/latest/technical.html#pip-vs-easy-install>`_.
 
 
-Get the Code
+获取源代码
 ------------
 
 Flask-WTF is actively developed on GitHub, where the code is

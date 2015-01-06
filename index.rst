@@ -1,34 +1,33 @@
 Flask-WTF
 ======================================
 
-**Flask-WTF** offers simple integration with WTForms_.
+**Flask-WTF** 提供了简单地 WTForms_ 的集成。
 
 .. _WTForms: http://wtforms.simplecodes.com/docs/
 
-Current Version
+当前版本
 ---------------
-The current version of Flask-WTF is |release|.
+Flask-WTF 的当前版本是 |release|。
 
-View other versions of documentation at `Read the Docs`_.
+其它版本的文档请见 `Read the Docs`_。
 
 .. _`Read the Docs`: https://flask-wtf.readthedocs.org
 
-Features
+功能
 --------
 
-* Integration with wtforms.
-* Secure Form with csrf token.
-* Global csrf protection.
-* Recaptcha supporting.
-* File upload that works with Flask-Uploads.
-* Internationalization integration.
+* 集成 wtforms。
+* 带有 csrf 令牌的安全表单。
+* 全局的 csrf 保护。
+* 支持验证码（Recaptcha）。
+* 与 Flask-Uploads 一起支持文件上传。
+* 国际化集成。
 
-User's Guide
+用户指南
 ------------
 
-This part of the documentation, which is mostly prose, begins with some
-background information about Flask-WTF, then focuses on step-by-step
-instructions for getting the most out of Flask-WTF.
+这一部分文档是枯燥的，以介绍 Flask-WTF 背景信息开始，接着注重说明使用 Flask-WTF 每步的步骤。
+
 
 .. toctree::
    :maxdepth: 2
@@ -39,21 +38,20 @@ instructions for getting the most out of Flask-WTF.
    csrf
    config
 
-API Documentation
+API 文档
 -----------------
 
-If you are looking for information on a specific function, class or method,
-this part of the documentation is for you.
+如果你正在查询某一个特定的函数，类或者方法的信息的话，这一部分正是你所需要的。
 
 .. toctree::
    :maxdepth: 2
 
    api
 
-Additional Notes
+其它注意事项
 ----------------
 
-Legal information and changelog are here.
+法律信息和更新历史的内容在这一部分。
 
 .. toctree::
    :maxdepth: 2
