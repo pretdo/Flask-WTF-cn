@@ -1,15 +1,13 @@
-Quickstart
+快读入门
 ==========
 
-Eager to get started? This page gives a good introduction to Flask-WTF.
-It assumes you already have Flask-WTF installed. If you do not, head over
-to the :doc:`install` section.
+急于上手？本页对 Flask-WTF 给出了一个详尽的介绍。假设你已经安装了 Flask-WTF，如果还未安装的话，请先浏览 :doc:`install`。
 
 
-Creating Forms
+创建表单
 --------------
 
-Flask-WTF provides your Flask application integration with WTForms. For example::
+Flask-WTF 提供了对 WTForms 的集成。例如::
 
     from flask_wtf import Form
     from wtforms import StringField
@@ -21,11 +19,9 @@ Flask-WTF provides your Flask application integration with WTForms. For example:
 
 .. note::
 
-   From version 0.9.0, Flask-WTF will not import anything from wtforms,
-   you need to import fields from wtforms.
+   从 0.9.0 版本开始，Flask-WTF 将不会从 wtforms 中导入任何的内容，用户必须自己从 wtforms 中导入字段。
 
-In addition, a CSRF token hidden field is created automatically. You can
-render this in your template:
+另外，隐藏的 CSRF 令牌会被自动地创建。你可以在模板这样地渲染它:
 
 .. sourcecode:: html+jinja
 
@@ -35,9 +31,7 @@ render this in your template:
         <input type="submit" value="Go">
     </form>
 
-However, in order to create valid XHTML/HTML the Form class has a method
-hidden_tag which renders any hidden fields, including the CSRF field,
-inside a hidden DIV tag:
+尽管如此，为了创建有效的 XHTML/HTML， Form 类有一个 hidden_tag 方法， 它在一个隐藏的 DIV 标签中渲染任何隐藏的字段，包括 CSRF 字段:
 
 .. sourcecode:: html+jinja
 
@@ -48,10 +42,10 @@ inside a hidden DIV tag:
     </form>
 
 
-Validating Forms
+验证表单
 ----------------
 
-Validating the request in your view handlers::
+在你的视图处理程序中验证请求::
 
     @app.route('/submit', methods=('GET', 'POST'))
     def submit():
@@ -60,8 +54,6 @@ Validating the request in your view handlers::
             return redirect('/success')
         return render_template('submit.html', form=form)
 
-Note that you don't have to pass ``request.form`` to Flask-WTF; it will
-load automatically. And the convenience ``validate_on_submit`` will check
-if it is a POST request and if it is valid.
+注意你不需要把 ``request.form`` 传给 Flask-WTF；Flask-WTF 会自动加载。便捷的方法 ``validate_on_submit`` 将会检查是否是一个 POST 请求并且请求是否有效。
 
-Heading over to :doc:`form` to learn more skills.
+阅读 :doc:`form` 学习更多的关于表单的技巧。

@@ -1,4 +1,4 @@
-Configuration
+配置
 =============
 
 Here is the full table of all configurations.

@@ -1,9 +1,9 @@
-Creating Forms
+创建表单
 ==============
 
-This part of the documentation covers the Form parts.
+这部分文档涉及表单(Form)信息。
 
-Secure Form
+安全表单
 -----------
 
 .. module:: flask_wtf
@@ -27,7 +27,7 @@ another secret key, config it::
     WTF_CSRF_SECRET_KEY = 'a random string'
 
 
-File Uploads
+文件上传
 ------------
 
 .. module:: flask_wtf.file
@@ -92,7 +92,7 @@ to :class:`FileAllowed`::
             FileAllowed(['jpg', 'png'], 'Images only!')
         ])
 
-HTML5 Widgets
+HTML5 控件
 -------------
 
 .. note::
@@ -113,7 +113,7 @@ You can import a number of HTML5 widgets from ``wtforms``::
 
 .. _recaptcha:
 
-Recaptcha
+验证码
 ---------
 
 .. module:: flask_wtf.recaptcha

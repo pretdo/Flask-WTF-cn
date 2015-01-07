@@ -1,44 +1,41 @@
 安装
 ============
 
-This part of the documentation covers the installation of Flask-WTF.
-The first step to using any software package is getting it properly installed.
+该部分文档涵盖了 Flask-WTF 安装。使用任何软件包的第一步即是正确安装它。
 
 
 Distribute & Pip
 ----------------
 
-Installing Flask-WTF is simple with `pip <http://www.pip-installer.org/>`_::
+用 `pip <http://www.pip-installer.org/>`_ 安装 Flask-WTF 是十分简单的::
 
     $ pip install Flask-WTF
 
-or, with `easy_install <http://pypi.python.org/pypi/setuptools>`_::
+或者，使用 `easy_install <http://pypi.python.org/pypi/setuptools>`_::
 
     $ easy_install Flask-WTF
 
-But, you really `shouldn't do that <https://python-packaging-user-guide.readthedocs.org/en/latest/technical.html#pip-vs-easy-install>`_.
+但是，你真的 `不应该这样做 <https://python-packaging-user-guide.readthedocs.org/en/latest/technical.html#pip-vs-easy-install>`_。
 
 
 获取源代码
 ------------
 
-Flask-WTF is actively developed on GitHub, where the code is
-`always available <https://github.com/lepture/flask-wtf>`_.
+Flask-WTF 在 GitHub 上活跃开发，代码在 GitHub 上 `始终可用 <https://github.com/lepture/flask-wtf>`。
 
-You can either clone the public repository::
+你也可以克隆公开仓库::
 
     git clone git://github.com/lepture/flask-wtf.git
 
-Download the `tarball <https://github.com/lepture/flask-wtf/tarball/master>`_::
+下载 `tarball <https://github.com/lepture/flask-wtf/tarball/master>`_::
 
     $ curl -OL https://github.com/lepture/flask-wtf/tarball/master
 
-Or, download the `zipball <https://github.com/lepture/flask-wtf/zipball/master>`_::
+或者，下载 `zipball <https://github.com/lepture/flask-wtf/zipball/master>`_::
 
     $ curl -OL https://github.com/lepture/flask-wtf/zipball/master
 
 
-Once you have a copy of the source, you can embed it in your Python package,
-or install it into your site-packages easily::
+当你有一份源码的副本后，你很容易地就可以把它嵌入到你的 Python 包中，或是安装到 site-packages::
 
     $ python setup.py install
