@@ -8,21 +8,17 @@
 
 .. module:: flask_wtf
 
-Without any configuration, the :class:`Form` will be a session secure
-form with csrf protection. We encourage you do nothing.
+无需任何配置，:class:`Form` 是一个带有 CSRF 保护的并且会话安全的表单。我们鼓励你什么都不做。
 
-But if you want to disable the csrf protection, you can pass::
+但是如果你想要禁用 CSRF 保护，你可以这样::
 
     form = Form(csrf_enabled=False)
 
-If you want to disable it globally, which you really shouldn't. But if
-you insist, it can be done with the configuration::
+如果你想要全局禁用 CSRF 保护，你真的不应该这样做。但是你要坚持这样做的话，你可以在配置中这样写::
 
     WTF_CSRF_ENABLED = False
 
-In order to generate the csrf token, you must have a secret key, this
-is usually the same as your Flask app secret key. If you want to use
-another secret key, config it::
+为了生成 CSRF 令牌，你必须有一个密钥，这通常与你的 Flask 应用密钥一致。如果你想使用不同的密钥，可在配置中指定::
 
     WTF_CSRF_SECRET_KEY = 'a random string'
 
@@ -32,12 +28,9 @@ another secret key, config it::
 
 .. module:: flask_wtf.file
 
-Flask-WTF provides you a :class:`FileField` to handle file uploading,
-it will automatically draw data from ``flask.request.files`` if the form
-is posted. The ``data`` attribute of :class:`FileField` will be an
-instance of Werkzeug FileStorage. 
+Flask-WTF 提供 :class:`FileField` 来处理文件上传，它在表单提交后，自动从 ``flask.request.files`` 中抽取数据。:class:`FileField` 的 ``data`` 属性是一个 Werkzeug FileStorage 实例。
 
-For example::
+例如::
 
     from werkzeug import secure_filename
     from flask_wtf.file import FileField
@@ -55,10 +48,9 @@ For example::
             filename = None
         return render_template('upload.html', form=form, filename=filename)
 
-.. note::
+.. 注意::
 
-    Remember to set the ``enctype`` of your HTML form to
-    ``multipart/form-data``, which means:
+    记得把你的 HTML 表单的 ``enctype`` 设置成 ``multipart/form-data``，既是::
 
     .. sourcecode:: html
 
@@ -66,10 +58,9 @@ For example::
             ....
         </form>
 
-More than that, Flask-WTF supports validation on file uploading. There
-are :class:`FileRequired` and :class:`FileAllowed`.
+此外，Flask-WTF 支持文件上传的验证。提供了 :class:`FileRequired` 和 :class:`FileAllowed`。
 
-The :class:`FileAllowed` works well with Flask-Uploads, for example::
+:class:`FileAllowed` 能够很好地和 Flask-Uploads 一起协同工作, 例如::
 
     from flask.ext.uploads import UploadSet, IMAGES
     from flask_wtf import Form
@@ -83,8 +74,7 @@ The :class:`FileAllowed` works well with Flask-Uploads, for example::
             FileAllowed(images, 'Images only!')
         ])
 
-It can work without Flask-Uploads too. You need to pass the extensions
-to :class:`FileAllowed`::
+也能在没有 Flask-Uploads 下挑大梁。这时候你需要向 :class:`FileAllowed` 传入扩展名即可::
 
     class UploadForm(Form):
         upload = FileField('image', validators=[
@@ -95,14 +85,14 @@ to :class:`FileAllowed`::
 HTML5 控件
 -------------
 
-.. note::
+.. 注意::
 
-    HTML5 widgets and fields are builtin of wtforms since 1.0.5. You
-    should consider import them from wtforms if possible.
+    自 wtforms 1.0.5 版本开始，wtforms 就内嵌了 HTML5 控件和字段。如果可能的话，你可以考虑从 wtforms 中导入它们。 
 
-    We will drop html5 module in next release 0.9.3.
+    我们将会在 0.9.3 版本后移除 html5 模块。
 
-You can import a number of HTML5 widgets from ``wtforms``::
+
+你可以从 ``wtforms`` 中导入一些 HTML5 控件::
 
     from wtforms.fields.html5 import URLField
     from wtforms.validators import url
@@ -118,7 +108,7 @@ You can import a number of HTML5 widgets from ``wtforms``::
 
 .. module:: flask_wtf.recaptcha
 
-Flask-WTF also provides Recaptcha support through a :class:`RecaptchaField`::
+Flask-WTF 通过 :class:`RecaptchaField` 也提供对验证码的支持::
 
     from flask_wtf import Form, RecaptchaField
     from wtforms import TextField
@@ -127,21 +117,19 @@ Flask-WTF also provides Recaptcha support through a :class:`RecaptchaField`::
         username = TextField('Username')
         recaptcha = RecaptchaField()
 
-This comes together with a number of configuration, which you have to
-implement them.
+这伴随着诸多配置，你需要逐一地配置它们。
 
 ===================== ===============================================
-RECAPTCHA_PUBLIC_KEY  **required** A public key.
-RECAPTCHA_PRIVATE_KEY **required** A private key.
-RECAPTCHA_API_SERVER  **optional** Specify your Recaptcha API server.
-RECAPTCHA_OPTIONS     **optional** A dict of configuration options.
+RECAPTCHA_PUBLIC_KEY  **必须** 公钥
+RECAPTCHA_PRIVATE_KEY **必须** 私钥
+RECAPTCHA_API_SERVER  **可选** 验证码 API 服务器
+RECAPTCHA_OPTIONS     **可选** 配置项的字典表
                       https://www.google.com/recaptcha/admin/create
 ===================== ===============================================
 
-For testing your application, if ``app.testing`` is ``True``, recaptcha
-field will always be valid for you convenience.
+对于应用测试时，如果 ``app.testing`` 为 ``True`` ，考虑到方便测试，Recaptcha 字段总是有效的。
 
-And it can be easily setup in the templates:
+在模板中很容易添加 Recaptcha 字段:
 
 .. sourcecode:: html+jinja
 
@@ -150,6 +138,6 @@ And it can be easily setup in the templates:
         {{ form.recaptcha }}
     </form>
 
-We have an example for you: `recaptcha@github`_.
+我们为你提供了例子: `recaptcha@github`_。
 
 .. _`recaptcha@github`: https://github.com/lepture/flask-wtf/tree/master/examples/recaptcha

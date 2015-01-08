@@ -1,9 +1,9 @@
 配置
 =============
 
-Here is the full table of all configurations.
+这里是所有配置的全表。
 
-Forms and CSRF
+表单和 CSRF
 --------------
 
 The full list of configuration for Flask-WTF. Usually, you don't need
@@ -32,7 +32,7 @@ WTF_HIDDEN_TAG_ATTRS HTML tag attributes of the hidden tag wrapper.
 ==================== ===============================================
 
 
-Recaptcha
+验证码
 ---------
 
 You have already learned these configuration at :ref:`recaptcha`.
