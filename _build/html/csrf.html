@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CSRF 保护 &mdash; Flask-WTF 0.9.5 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flask-WTF 0.9.5 documentation" href="index.html" />
+    <link rel="next" title="配置" href="config.html" />
+    <link rel="prev" title="创建表单" href="form.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="config.html" title="配置"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="form.html" title="创建表单"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Flask-WTF 0.9.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="csrf">
+<h1>CSRF 保护<a class="headerlink" href="#csrf" title="Permalink to this headline">¶</a></h1>
+<p>这部分文档介绍了 CSRF 保护。</p>
+<div class="section" id="id1">
+<h2>为什么需要 CSRF？<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Flask-WTF 表单保护你免受 CSRF 威胁，你不需要有任何担心。尽管如此，如果你有不包含表单的视图，那么它们仍需要保护。</p>
+<p>例如，由 AJAX 发送的 POST 请求，然而它背后并没有表单。在 Flask-WTF 0.9.0 以前的版本你无法获得
+CSRF 令牌。这是为什么我们要实现 CSRF。</p>
+</div>
+<div class="section" id="module-flask_wtf.csrf">
+<span id="id2"></span><h2>实现<a class="headerlink" href="#module-flask_wtf.csrf" title="Permalink to this headline">¶</a></h2>
+<p>为了能够让所有的视图函数受到 CSRF 保护，你需要开启 <a class="reference internal" href="api.html#flask_wtf.csrf.CsrfProtect" title="flask_wtf.csrf.CsrfProtect"><tt class="xref py py-class docutils literal"><span class="pre">CsrfProtect</span></tt></a> 模块:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_wtf.csrf</span> <span class="kn">import</span> <span class="n">CsrfProtect</span>
+
+<span class="n">CsrfProtect</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>像任何其它的 Flask 扩展一样，你可以惰性加载它:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_wtf.csrf</span> <span class="kn">import</span> <span class="n">CsrfProtect</span>
+
+<span class="n">csrf</span> <span class="o">=</span> <span class="n">CsrfProtect</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">create_app</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+    <span class="n">csrf</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">你需要为 CSRF 保护设置一个秘钥。通常下，同 Flask 应用的 SECRET_KEY 是一样的。</p>
+</div>
+<p>如果模板中存在表单，你不需要做任何事情。与之前一样:</p>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span> <span class="na">action=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
+    <span class="cp">{{</span> <span class="nv">form.csrf_token</span> <span class="cp">}}</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+</div>
+<p>但是如果模板中没有表单，你仍然需要一个 CSRF 令牌:</p>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span> <span class="na">action=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name=</span><span class="s">&quot;csrf_token&quot;</span> <span class="na">value=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">csrf_token</span><span class="o">()</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+</div>
+<p>无论何时未通过 CSRF 验证，都会返回 400 响应。你可以自定义这个错误响应:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@csrf.error_handler</span>
+<span class="k">def</span> <span class="nf">csrf_error</span><span class="p">(</span><span class="n">reason</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;csrf_error.html&#39;</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">),</span> <span class="mi">400</span>
+</pre></div>
+</div>
+<p>我们强烈建议你对所有视图启用 CSRF 保护。但也提供了某些视图函数不需要保护的装饰器:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@csrf.exempt</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/foo&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;POST&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">my_handler</span><span class="p">():</span>
+    <span class="c"># ...</span>
+    <span class="k">return</span> <span class="s">&#39;ok&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ajax">
+<h2>AJAX<a class="headerlink" href="#ajax" title="Permalink to this headline">¶</a></h2>
+<p>不需要表单，通过 AJAX 发送 POST 请求成为可能。0.9.0 版本后这个功能变成可用的。</p>
+<p>假设你已经使用了 <tt class="docutils literal"><span class="pre">CsrfProtect(app)</span></tt>，你可以通过 <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">csrf_token()</span> <span class="pre">}}</span></tt> 获取 CSRF 令牌。这个方法在每个模板中都可以使用，你并不需要担心在没有表单时如何渲染 CSRF 令牌字段。</p>
+<p>我们推荐的方式是在 <tt class="docutils literal"><span class="pre">&lt;meta&gt;</span></tt> 标签中渲染 CSRF 令牌:</p>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;csrf-token&quot;</span> <span class="na">content=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">csrf_token</span><span class="o">()</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+</pre></div>
+</div>
+<p>在 <tt class="docutils literal"><span class="pre">&lt;script&gt;</span></tt> 标签中渲染同样可行:</p>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+    <span class="kd">var</span> <span class="nx">csrftoken</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="cp">{{</span> <span class="nv">csrf_token</span><span class="o">()</span> <span class="cp">}}</span><span class="s2">&quot;</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+</div>
+<p>下面的例子采用了在 <tt class="docutils literal"><span class="pre">&lt;meta&gt;</span></tt> 标签渲染的方式， 在 <tt class="docutils literal"><span class="pre">&lt;script&gt;</span></tt> 中渲染会更简单，你无须担心没有相应的例子。</p>
+<p>无论何时你发送 AJAX POST 请求，为其添加 <tt class="docutils literal"><span class="pre">X-CSRFToken</span></tt> 头:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">csrftoken</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=csrf-token]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajaxSetup</span><span class="p">({</span>
+    <span class="nx">beforeSend</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="sr">/^(GET|HEAD|OPTIONS|TRACE)$/i</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">crossDomain</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;X-CSRFToken&quot;</span><span class="p">,</span> <span class="nx">csrftoken</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>故障排除<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>当你定义你的表单的时候，如果犯了 <a href="#id4"><span class="problematic" id="id5">`这个错误`_</span></a> : 从 <tt class="docutils literal"><span class="pre">wtforms</span></tt> 中导入 <tt class="docutils literal"><span class="pre">Form</span></tt> 而不是从 <tt class="docutils literal"><span class="pre">flask.ext.wtf</span></tt> 中导入，CSRF 保护的大部分功能都能工作(除了 <tt class="docutils literal"><span class="pre">form.validate_on_submit()</span></tt>)，但是 CSRF 保护将会发生异常。在提交表单的时候，你将会得到 <tt class="docutils literal"><span class="pre">Bad</span> <span class="pre">Request</span></tt>/<tt class="docutils literal"><span class="pre">CSRF</span> <span class="pre">token</span> <span class="pre">missing</span> <span class="pre">or</span> <span class="pre">incorrect</span></tt> 错误。这个错误的出现就是因为你的导入错误，而不是你的配置问题。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">CSRF 保护</a><ul>
+<li><a class="reference internal" href="#id1">为什么需要 CSRF？</a></li>
+<li><a class="reference internal" href="#module-flask_wtf.csrf">实现</a></li>
+<li><a class="reference internal" href="#ajax">AJAX</a></li>
+<li><a class="reference internal" href="#id3">故障排除</a></li>
+</ul>
+</li>
+</ul>
+<h3>相关主题</h3>
+<ul>
+  <li><a href="index.html">文档概述</a><ul>
+      <li>前一章: <a href="form.html" title="previous chapter">创建表单</a></li>
+      <li>后一章: <a href="config.html" title="next chapter">配置</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/csrf.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2010, Dan Jacob.
+  </div>
+  
+  </body>
+</html>

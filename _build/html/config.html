@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>配置 &mdash; Flask-WTF 0.9.5 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flask-WTF 0.9.5 documentation" href="index.html" />
+    <link rel="next" title="开发者接口" href="api.html" />
+    <link rel="prev" title="CSRF 保护" href="csrf.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="开发者接口"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="csrf.html" title="CSRF 保护"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Flask-WTF 0.9.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>配置<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>这里是所有配置的全表。</p>
+<div class="section" id="csrf">
+<h2>表单和 CSRF<a class="headerlink" href="#csrf" title="Permalink to this headline">¶</a></h2>
+<p>Flask-WTF 完整的配置清单。通常，你不必配置它们。默认的配置就能正常工作。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>WTF_CSRF_ENABLED</td>
+<td>禁用/开启表单的 CSRF 保护。默认是开启。</td>
+</tr>
+<tr class="row-even"><td>WTF_I18N_ENABLED</td>
+<td>禁用/开启 I18N 支持。需要和 Flask-Babel
+配合一起使用。默认是开启。</td>
+</tr>
+<tr class="row-odd"><td>WTF_CSRF_HEADERS</td>
+<td>需要检验的 CSRF 令牌 HTTP 头。默认是
+<strong>[&#8216;X-CSRFToken&#8217;, &#8216;X-CSRF-Token&#8217;]</strong></td>
+</tr>
+<tr class="row-even"><td>WTF_CSRF_SECRET_KEY</td>
+<td>一个随机字符串生成 CSRF 令牌。
+默认同 SECRET_KEY 一样。</td>
+</tr>
+<tr class="row-odd"><td>WTF_CSRF_TIME_LIMIT</td>
+<td>CSRF 令牌过期时间。默认是 <strong>3600</strong> 秒。</td>
+</tr>
+<tr class="row-even"><td>WTF_CSRF_SSL_STRICT</td>
+<td>使用 SSL 时进行严格保护。这会检查 HTTP Referrer，
+验证是否同源。默认为 True 。</td>
+</tr>
+<tr class="row-odd"><td>WTF_CSRF_METHODS</td>
+<td>使用 CSRF 保护的 HTTP 方法。默认是
+<strong>[&#8216;POST&#8217;, &#8216;PUT&#8217;, &#8216;PATCH&#8217;]</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h2>验证码<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>你已经在 <a class="reference internal" href="form.html#recaptcha"><em>验证码</em></a> 中了解了这些配置选项。该表为了方便速查。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="69%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>RECAPTCHA_USE_SSL</td>
+<td>允许/禁用 Recaptcha 使用 SSL。默认是 False。</td>
+</tr>
+<tr class="row-even"><td>RECAPTCHA_PUBLIC_KEY</td>
+<td><strong>必须</strong> 公钥。</td>
+</tr>
+<tr class="row-odd"><td>RECAPTCHA_PRIVATE_KEY</td>
+<td><strong>必须</strong> 私钥。</td>
+</tr>
+<tr class="row-even"><td>RECAPTCHA_OPTIONS</td>
+<td><strong>可选</strong> 配置选项的字典。
+<a class="reference external" href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">配置</a><ul>
+<li><a class="reference internal" href="#csrf">表单和 CSRF</a></li>
+<li><a class="reference internal" href="#id2">验证码</a></li>
+</ul>
+</li>
+</ul>
+<h3>相关主题</h3>
+<ul>
+  <li><a href="index.html">文档概述</a><ul>
+      <li>前一章: <a href="csrf.html" title="previous chapter">CSRF 保护</a></li>
+      <li>后一章: <a href="api.html" title="next chapter">开发者接口</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/config.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2010, Dan Jacob.
+  </div>
+  
+  </body>
+</html>

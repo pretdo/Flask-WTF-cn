@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Flask-WTF &mdash; Flask-WTF 0.9.5 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flask-WTF 0.9.5 documentation" href="#" />
+    <link rel="next" title="安装" href="install.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+  
+  <div class=indexwrapper>
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="安装"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Flask-WTF 0.9.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="flask-wtf">
+<h1>Flask-WTF<a class="headerlink" href="#flask-wtf" title="Permalink to this headline">¶</a></h1>
+<p><strong>Flask-WTF</strong> 提供了简单地 <a class="reference external" href="http://wtforms.simplecodes.com/docs/">WTForms</a> 的集成。</p>
+<div class="section" id="id1">
+<h2>当前版本<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Flask-WTF 的当前版本是 0.9.5。</p>
+<p>其它版本的文档请见 <a class="reference external" href="https://flask-wtf.readthedocs.org">Read the Docs</a>。</p>
+</div>
+<div class="section" id="id2">
+<h2>功能<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>集成 wtforms。</li>
+<li>带有 csrf 令牌的安全表单。</li>
+<li>全局的 csrf 保护。</li>
+<li>支持验证码（Recaptcha）。</li>
+<li>与 Flask-Uploads 一起支持文件上传。</li>
+<li>国际化集成。</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>用户指南<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>这一部分文档是枯燥的，以介绍 Flask-WTF 背景信息开始，接着注重说明使用 Flask-WTF 每步的步骤。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">安装</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#distribute-pip">Distribute &amp; Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id3">获取源代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">快读入门</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id2">创建表单</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id3">验证表单</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="form.html">创建表单</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="form.html#module-flask_wtf">安全表单</a></li>
+<li class="toctree-l2"><a class="reference internal" href="form.html#module-flask_wtf.file">文件上传</a></li>
+<li class="toctree-l2"><a class="reference internal" href="form.html#html5">HTML5 控件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="form.html#module-flask_wtf.recaptcha">验证码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="csrf.html">CSRF 保护</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="csrf.html#id1">为什么需要 CSRF？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csrf.html#module-flask_wtf.csrf">实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csrf.html#ajax">AJAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csrf.html#id3">故障排除</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#csrf">表单和 CSRF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id2">验证码</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="api">
+<h2>API 文档<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<p>如果你正在查询某一个特定的函数，类或者方法的信息的话，这一部分正是你所需要的。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">开发者接口</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-flask_wtf">表单和字段</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-flask_wtf.csrf">CSRF 保护</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>其它注意事项<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>法律信息和更新历史的内容在这一部分。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">升级到新版本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="upgrade.html#id2">版本 0.9.0</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Flask-WTF 更新历史</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-10-3">Version 0.10.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-10-2">Version 0.10.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-10-1">Version 0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-10-0">Version 0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-9-5">Version 0.9.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-9-4">Version 0.9.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-9-3">Version 0.9.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-9-2">Version 0.9.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-9-1">Version 0.9.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-9-0">Version 0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-8-4">Version 0.8.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-8-3">Version 0.8.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-8-2-and-prior">Version 0.8.2 and prior</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">作者</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="authors.html#id2">贡献者</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">BSD 许可证</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3><a href="#">关于 Flask-WTF</a></h3>
+<p>Flask 的简单 WTForms 集成，包含 CSRF、文件上传和 Recaptcha 集成。</p><h3>相关链接</h3>
+<ul>
+  <li><a href="https://github.com/lepture/flask-wtf">Flask-WTF@GitHub</a></li>
+  <li><a href="http://pypi.python.org/pypi/Flask-WTF">Flask-WTF@PyPI</a></li>
+  <li><a href="https://github.com/lepture/flask-wtf/issues">Issue Tracker</a></li>
+</ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2010, Dan Jacob.
+  </div>
+  
+  </div>
+  
+  </body>
+</html>
