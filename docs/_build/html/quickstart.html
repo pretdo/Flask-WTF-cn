@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>快读入门 &mdash; Flask-WTF 0.9.5 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flask-WTF 0.9.5 documentation" href="index.html" />
+    <link rel="next" title="创建表单" href="form.html" />
+    <link rel="prev" title="安装" href="install.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="form.html" title="创建表单"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="安装"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Flask-WTF 0.9.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>快读入门<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>急于上手？本页对 Flask-WTF 给出了一个详尽的介绍。假设你已经安装了 Flask-WTF，如果还未安装的话，请先浏览 <a class="reference internal" href="install.html"><em>安装</em></a>。</p>
+<div class="section" id="id2">
+<h2>创建表单<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Flask-WTF 提供了对 WTForms 的集成。例如:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask_wtf</span> <span class="kn">import</span> <span class="n">Form</span>
+<span class="kn">from</span> <span class="nn">wtforms</span> <span class="kn">import</span> <span class="n">StringField</span>
+<span class="kn">from</span> <span class="nn">wtforms.validators</span> <span class="kn">import</span> <span class="n">DataRequired</span>
+
+<span class="k">class</span> <span class="nc">MyForm</span><span class="p">(</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">从 0.9.0 版本开始，Flask-WTF 将不会从 wtforms 中导入任何的内容，用户必须自己从 wtforms 中导入字段。</p>
+</div>
+<p>另外，隐藏的 CSRF 令牌会被自动地创建。你可以在模板这样地渲染它:</p>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">&quot;POST&quot;</span> <span class="na">action=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
+    <span class="cp">{{</span> <span class="nv">form.csrf_token</span> <span class="cp">}}</span>
+    <span class="cp">{{</span> <span class="nv">form.name.label</span> <span class="cp">}}</span> <span class="cp">{{</span> <span class="nv">form.name</span><span class="o">(</span><span class="nv">size</span><span class="o">=</span><span class="m">20</span><span class="o">)</span> <span class="cp">}}</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Go&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+</div>
+<p>尽管如此，为了创建有效的 XHTML/HTML， Form 类有一个 hidden_tag 方法， 它在一个隐藏的 DIV 标签中渲染任何隐藏的字段，包括 CSRF 字段:</p>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">&quot;POST&quot;</span> <span class="na">action=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
+    <span class="cp">{{</span> <span class="nv">form.hidden_tag</span><span class="o">()</span> <span class="cp">}}</span>
+    <span class="cp">{{</span> <span class="nv">form.name.label</span> <span class="cp">}}</span> <span class="cp">{{</span> <span class="nv">form.name</span><span class="o">(</span><span class="nv">size</span><span class="o">=</span><span class="m">20</span><span class="o">)</span> <span class="cp">}}</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Go&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>验证表单<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>在你的视图处理程序中验证请求:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/submit&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;POST&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">submit</span><span class="p">():</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">MyForm</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">validate_on_submit</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/success&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;submit.html&#39;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>注意你不需要把 <tt class="docutils literal"><span class="pre">request.form</span></tt> 传给 Flask-WTF；Flask-WTF 会自动加载。便捷的方法 <tt class="docutils literal"><span class="pre">validate_on_submit</span></tt> 将会检查是否是一个 POST 请求并且请求是否有效。</p>
+<p>阅读 <a class="reference internal" href="form.html"><em>创建表单</em></a> 学习更多的关于表单的技巧。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">快读入门</a><ul>
+<li><a class="reference internal" href="#id2">创建表单</a></li>
+<li><a class="reference internal" href="#id3">验证表单</a></li>
+</ul>
+</li>
+</ul>
+<h3>相关主题</h3>
+<ul>
+  <li><a href="index.html">文档概述</a><ul>
+      <li>前一章: <a href="install.html" title="previous chapter">安装</a></li>
+      <li>后一章: <a href="form.html" title="next chapter">创建表单</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/quickstart.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2010, Dan Jacob.
+
+  </div>
+  
+  </body>
+</html>

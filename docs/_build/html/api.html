@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>开发者接口 &mdash; Flask-WTF 0.9.5 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flask-WTF 0.9.5 documentation" href="index.html" />
+    <link rel="next" title="升级到新版本" href="upgrade.html" />
+    <link rel="prev" title="配置" href="config.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+  
+  
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="upgrade.html" title="升级到新版本"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="config.html" title="配置"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Flask-WTF 0.9.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>开发者接口<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>该部分文档涵盖了 Flask-WTF 的全部接口。</p>
+<div class="section" id="module-flask_wtf">
+<span id="id2"></span><h2>表单和字段<a class="headerlink" href="#module-flask_wtf" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="flask_wtf.Form">
+<em class="property">class </em><tt class="descclassname">flask_wtf.</tt><tt class="descname">Form</tt><big>(</big><em>formdata=&lt;class flask_wtf.form._Auto at 0x03C27DC0&gt;</em>, <em>obj=None</em>, <em>prefix=''</em>, <em>csrf_context=None</em>, <em>secret_key=None</em>, <em>csrf_enabled=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#flask_wtf.Form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flask-specific subclass of WTForms <strong>SecureForm</strong> class.</p>
+<p>If formdata is not specified, this will use flask.request.form.
+Explicitly pass formdata = None to prevent this.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>csrf_context</strong> &#8211; a session or dict-like object to use when making
+CSRF tokens. Default: flask.session.</li>
+<li><strong>secret_key</strong> &#8211; <p>a secret key for building CSRF tokens. If this isn&#8217;t
+specified, the form will take the first of these
+that is defined:</p>
+<ul>
+<li>SECRET_KEY attribute on this class</li>
+<li>WTF_CSRF_SECRET_KEY config of flask app</li>
+<li>SECRET_KEY config of flask app</li>
+<li>session secret key</li>
+</ul>
+</li>
+<li><strong>csrf_enabled</strong> &#8211; whether to use CSRF protection. If False, all
+csrf behavior is suppressed.
+Default: WTF_CSRF_ENABLED config value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="flask_wtf.Form.hidden_tag">
+<tt class="descname">hidden_tag</tt><big>(</big><em>*fields</em><big>)</big><a class="headerlink" href="#flask_wtf.Form.hidden_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps hidden fields in a hidden DIV tag, in order to keep XHTML
+compliance.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.3.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fields</strong> &#8211; list of hidden field names. If not provided will render
+all hidden fields, including the CSRF field.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="flask_wtf.Form.is_submitted">
+<tt class="descname">is_submitted</tt><big>(</big><big>)</big><a class="headerlink" href="#flask_wtf.Form.is_submitted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if form has been submitted. The default case is if the HTTP
+method is <strong>PUT</strong> or <strong>POST</strong>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flask_wtf.Form.validate_csrf_data">
+<tt class="descname">validate_csrf_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#flask_wtf.Form.validate_csrf_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the csrf data is valid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> &#8211; the csrf string to be validated.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="flask_wtf.Form.validate_on_submit">
+<tt class="descname">validate_on_submit</tt><big>(</big><big>)</big><a class="headerlink" href="#flask_wtf.Form.validate_on_submit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if form has been submitted and if so runs validate. This is
+a shortcut, equivalent to <tt class="docutils literal"><span class="pre">form.is_submitted()</span> <span class="pre">and</span> <span class="pre">form.validate()</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.RecaptchaField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.</tt><tt class="descname">RecaptchaField</tt><big>(</big><em>label=''</em>, <em>validators=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#flask_wtf.RecaptchaField" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.Recaptcha">
+<em class="property">class </em><tt class="descclassname">flask_wtf.</tt><tt class="descname">Recaptcha</tt><big>(</big><em>message=None</em><big>)</big><a class="headerlink" href="#flask_wtf.Recaptcha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates a ReCaptcha.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.RecaptchaWidget">
+<em class="property">class </em><tt class="descclassname">flask_wtf.</tt><tt class="descname">RecaptchaWidget</tt><a class="headerlink" href="#flask_wtf.RecaptchaWidget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-flask_wtf.file"></span><dl class="class">
+<dt id="flask_wtf.file.FileField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.file.</tt><tt class="descname">FileField</tt><big>(</big><em>label=None</em>, <em>validators=None</em>, <em>filters=()</em>, <em>description=u''</em>, <em>id=None</em>, <em>default=None</em>, <em>widget=None</em>, <em>_form=None</em>, <em>_name=None</em>, <em>_prefix=u''</em>, <em>_translations=None</em>, <em>_meta=None</em><big>)</big><a class="headerlink" href="#flask_wtf.file.FileField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Werkzeug-aware subclass of <strong>wtforms.FileField</strong></p>
+<p>Provides a <cite>has_file()</cite> method to check if its data is a FileStorage
+instance with an actual file.</p>
+<dl class="method">
+<dt id="flask_wtf.file.FileField.has_file">
+<tt class="descname">has_file</tt><big>(</big><big>)</big><a class="headerlink" href="#flask_wtf.file.FileField.has_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True iff self.data is a FileStorage with file data</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.file.FileAllowed">
+<em class="property">class </em><tt class="descclassname">flask_wtf.file.</tt><tt class="descname">FileAllowed</tt><big>(</big><em>upload_set</em>, <em>message=None</em><big>)</big><a class="headerlink" href="#flask_wtf.file.FileAllowed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that the uploaded file is allowed by the given
+Flask-Uploads UploadSet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>upload_set</strong> &#8211; A list/tuple of extention names or an instance
+of <tt class="docutils literal"><span class="pre">flask.ext.uploads.UploadSet</span></tt></li>
+<li><strong>message</strong> &#8211; error message</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>You can also use the synonym <strong>file_allowed</strong>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.file.FileRequired">
+<em class="property">class </em><tt class="descclassname">flask_wtf.file.</tt><tt class="descname">FileRequired</tt><big>(</big><em>message=None</em><big>)</big><a class="headerlink" href="#flask_wtf.file.FileRequired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates that field has a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> &#8211; error message</td>
+</tr>
+</tbody>
+</table>
+<p>You can also use the synonym <strong>file_required</strong>.</p>
+</dd></dl>
+
+<span class="target" id="module-flask_wtf.html5"></span><dl class="class">
+<dt id="flask_wtf.html5.SearchInput">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">SearchInput</tt><big>(</big><em>input_type=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.SearchInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an input with type &#8220;search&#8221;.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.SearchField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">SearchField</tt><big>(</big><em>label=None</em>, <em>validators=None</em>, <em>filters=()</em>, <em>description=u''</em>, <em>id=None</em>, <em>default=None</em>, <em>widget=None</em>, <em>_form=None</em>, <em>_name=None</em>, <em>_prefix=u''</em>, <em>_translations=None</em>, <em>_meta=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.SearchField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;search&quot;&gt;</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.URLInput">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">URLInput</tt><big>(</big><em>input_type=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.URLInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an input with type &#8220;url&#8221;.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.URLField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">URLField</tt><big>(</big><em>label=None</em>, <em>validators=None</em>, <em>filters=()</em>, <em>description=u''</em>, <em>id=None</em>, <em>default=None</em>, <em>widget=None</em>, <em>_form=None</em>, <em>_name=None</em>, <em>_prefix=u''</em>, <em>_translations=None</em>, <em>_meta=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.URLField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;url&quot;&gt;</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.EmailInput">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">EmailInput</tt><big>(</big><em>input_type=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.EmailInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an input with type &#8220;email&#8221;.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.EmailField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">EmailField</tt><big>(</big><em>label=None</em>, <em>validators=None</em>, <em>filters=()</em>, <em>description=u''</em>, <em>id=None</em>, <em>default=None</em>, <em>widget=None</em>, <em>_form=None</em>, <em>_name=None</em>, <em>_prefix=u''</em>, <em>_translations=None</em>, <em>_meta=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.EmailField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;email&quot;&gt;</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.TelInput">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">TelInput</tt><big>(</big><em>input_type=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.TelInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an input with type &#8220;tel&#8221;.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.TelField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">TelField</tt><big>(</big><em>label=None</em>, <em>validators=None</em>, <em>filters=()</em>, <em>description=u''</em>, <em>id=None</em>, <em>default=None</em>, <em>widget=None</em>, <em>_form=None</em>, <em>_name=None</em>, <em>_prefix=u''</em>, <em>_translations=None</em>, <em>_meta=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.TelField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;tel&quot;&gt;</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.NumberInput">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">NumberInput</tt><big>(</big><em>step=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.NumberInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an input with type &#8220;number&#8221;.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.IntegerField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">IntegerField</tt><big>(</big><em>label=None</em>, <em>validators=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.IntegerField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;number&quot;&gt;</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.DecimalField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">DecimalField</tt><big>(</big><em>label=None</em>, <em>validators=None</em>, <em>places=&lt;unset value&gt;</em>, <em>rounding=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.DecimalField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;number&quot;&gt;</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.RangeInput">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">RangeInput</tt><big>(</big><em>step=None</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.RangeInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders an input with type &#8220;range&#8221;.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.IntegerRangeField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">IntegerRangeField</tt><big>(</big><em>label=None</em>, <em>validators=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.IntegerRangeField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;range&quot;&gt;</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="flask_wtf.html5.DecimalRangeField">
+<em class="property">class </em><tt class="descclassname">flask_wtf.html5.</tt><tt class="descname">DecimalRangeField</tt><big>(</big><em>label=None</em>, <em>validators=None</em>, <em>places=&lt;unset value&gt;</em>, <em>rounding=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#flask_wtf.html5.DecimalRangeField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an <tt class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type=&quot;range&quot;&gt;</span></tt>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flask_wtf.csrf">
+<span id="csrf"></span><h2>CSRF 保护<a class="headerlink" href="#module-flask_wtf.csrf" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="flask_wtf.csrf.CsrfProtect">
+<em class="property">class </em><tt class="descclassname">flask_wtf.csrf.</tt><tt class="descname">CsrfProtect</tt><big>(</big><em>app=None</em><big>)</big><a class="headerlink" href="#flask_wtf.csrf.CsrfProtect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable csrf protect for Flask.</p>
+<p>Register it with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">CsrfProtect</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And in the templates, add the token input:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;input type=&quot;hidden&quot; name=&quot;csrf_token&quot; value=&quot;{{ csrf_token() }}&quot;/&gt;
+</pre></div>
+</div>
+<p>If you need to send the token via AJAX, and there is no form:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;meta name=&quot;csrf_token&quot; content=&quot;{{ csrf_token() }}&quot; /&gt;
+</pre></div>
+</div>
+<p>You can grab the csrf token with JavaScript, and send the token together.</p>
+<dl class="method">
+<dt id="flask_wtf.csrf.CsrfProtect.error_handler">
+<tt class="descname">error_handler</tt><big>(</big><em>view</em><big>)</big><a class="headerlink" href="#flask_wtf.csrf.CsrfProtect.error_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator that set the error response handler.</p>
+<p>It accepts one parameter <cite>reason</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@csrf.error_handler</span>
+<span class="k">def</span> <span class="nf">csrf_error</span><span class="p">(</span><span class="n">reason</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;error.html&#39;</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default, it will return a 400 response.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="flask_wtf.csrf.CsrfProtect.exempt">
+<tt class="descname">exempt</tt><big>(</big><em>view</em><big>)</big><a class="headerlink" href="#flask_wtf.csrf.CsrfProtect.exempt" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator that can exclude a view from csrf protection.</p>
+<p>Remember to put the decorator above the <cite>route</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">csrf</span> <span class="o">=</span> <span class="n">CsrfProtect</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<span class="nd">@csrf.exempt</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/some-view&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">some_view</span><span class="p">():</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="flask_wtf.csrf.generate_csrf">
+<tt class="descclassname">flask_wtf.csrf.</tt><tt class="descname">generate_csrf</tt><big>(</big><em>secret_key=None</em>, <em>time_limit=None</em><big>)</big><a class="headerlink" href="#flask_wtf.csrf.generate_csrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate csrf token code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>secret_key</strong> &#8211; A secret key for mixing in the token,
+default is Flask.secret_key.</li>
+<li><strong>time_limit</strong> &#8211; Token valid in the time limit,
+default is 3600s.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="flask_wtf.csrf.validate_csrf">
+<tt class="descclassname">flask_wtf.csrf.</tt><tt class="descname">validate_csrf</tt><big>(</big><em>data</em>, <em>secret_key=None</em>, <em>time_limit=None</em><big>)</big><a class="headerlink" href="#flask_wtf.csrf.validate_csrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the given data is a valid csrf token.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; The csrf token value to be checked.</li>
+<li><strong>secret_key</strong> &#8211; A secret key for mixing in the token,
+default is Flask.secret_key.</li>
+<li><strong>time_limit</strong> &#8211; Check if the csrf token is expired.
+default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">开发者接口</a><ul>
+<li><a class="reference internal" href="#module-flask_wtf">表单和字段</a></li>
+<li><a class="reference internal" href="#module-flask_wtf.csrf">CSRF 保护</a></li>
+</ul>
+</li>
+</ul>
+<h3>相关主题</h3>
+<ul>
+  <li><a href="index.html">文档概述</a><ul>
+      <li>前一章: <a href="config.html" title="previous chapter">配置</a></li>
+      <li>后一章: <a href="upgrade.html" title="next chapter">升级到新版本</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="footer">
+    &copy; Copyright 2010, Dan Jacob.
+
+  </div>
+  
+  </body>
+</html>
